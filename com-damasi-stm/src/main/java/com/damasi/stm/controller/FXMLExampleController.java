@@ -1,15 +1,35 @@
 package com.damasi.stm.controller;
 
-import javafx.event.ActionEvent;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class FXMLExampleController {
-    @FXML
-    private Text actiontarget;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @FXML
-    protected void handleSubmitButtonAction(ActionEvent event) {
-        actiontarget.setText("Sign in button pressed");
+    public void changeScene(MouseEvent event) throws IOException {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/" + ((TreeItem) ((TreeView) event.getSource()).getSelectionModel().getSelectedItem()).getValue().toString() + ".fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } finally {
+
+        }
+
     }
 }
